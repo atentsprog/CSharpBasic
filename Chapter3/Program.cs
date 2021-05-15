@@ -11,31 +11,58 @@ namespace Chapter3
         // 클래스
         // 접근 한정자.
         // 변수와 static변수
+        class Unity
+        {
+            public void Run()
+            {
+                Goblin g1 = new Goblin();
+
+                //슬라임과 고블린의 전투 진행.
+                Slime s1 = new Slime();
+                Console.WriteLine(Slime.SlimeCount); // 명확하게 클래스 이름을 통해서 접근하는 변수는 static변수다.
+                //Console.WriteLine(s1.slimeCount);
+                //s1.slimeCount //<-static도 캑체를 통해 변수에 접근 할수 있으면 static인지 아닌지 헷깔린다.
+
+                Slime s2 = new Slime();
+                Slime s3 = new Slime();
+
+
+                s1.Attack(g1);
+                g1.Attack(s1);
+            }
+        }
+
         static void Main(string[] args)
         {
+            // 슬라임과 고블린을 전투 시키자.
+            Unity unity = new Unity();
+            unity.Run();
+
+
             // 조건문 : if, switch
             {
                 int i = 2;
+                i = 3;
                 bool result = i > 10;
                 // 예제1. 가장 단순한 형태.
                 if (result)
                 {
-                    Debug.WriteLine("조건이 참일때 실행");
+                    Debug.WriteLine("여기는 실행안됨");
                 }
 
                 // 예제2. else추가
                 if (i > 10)
                 {
-                    Debug.WriteLine("조건이 참일때 실행");
+                    Debug.WriteLine("조건이 참일때 실행, 여기도 실행안됨");
                 }
                 else
                 {
-                    Debug.WriteLine("조건이 거짓일때 실행");
+                    Debug.WriteLine("조건이 거짓일때 실행, 위에 실행안되서 여기실행됨");
                 }
 
 
                 // 예제2. else if추가
-                if (i > 10)
+                if (i > 10) // i == 2
                 {
                     Debug.WriteLine("조건이 참일때 실행");
                 }
@@ -43,10 +70,10 @@ namespace Chapter3
                 {
                     Debug.WriteLine("i(2) > 0 크다");
                 }
-                //else // 마지막에 else문도 추가 가능.
-                //{
-                //    Debug.WriteLine("모두 아닌 경우 최종적으로 실행");
-                //}
+                else // 마지막에 else문도 추가 가능.
+                {
+                    Debug.WriteLine("모두 아닌 경우 최종적으로 실행");
+                }
 
 
                 // 예제3. if문안에 다른 if, for, 변수/클래스 선언,... 가능
@@ -60,16 +87,26 @@ namespace Chapter3
                 }
             }
 
-
             //switch
             {
                 //int를 switch 문에 사용
                 int k = 0; //<- 세미콜론.
+                int sum = 10;
                 switch (k)
                 {
-                    case 0: Console.WriteLine("0 이다"); break;
                     case 1: // <- 콜론,줄바꿈 표시 아니에요 
-                        Console.WriteLine("1 이다");
+                        {
+                            int i = k * 2;
+                            sum = i;
+                            Console.WriteLine("1 이다");
+                        }
+                        break;
+                    case 0:
+                        {
+                            int i = 0;
+                            sum = i;
+                            Console.WriteLine("0 이다");
+                        }
                         break;
                     case 2:
                         {
@@ -88,12 +125,16 @@ namespace Chapter3
                         break;
                 }
 
+
                 //스트링을 switch 문에 사용
-                string operatorString = "+";
+                string operatorString = "Add";
                 switch (operatorString)
                 {
-                    case "+":
+                    case "Add":
                         Console.WriteLine("더하기 연산자");
+                        break;
+                    case "Minus":
+                        Console.WriteLine("빼기 연산자");
                         break;
                     default:
                         Console.WriteLine(operatorString + " 알수없는 연산자입니다");
@@ -118,7 +159,7 @@ namespace Chapter3
                         Console.WriteLine(i);
                     }
 
-                    for (int dan = 2; dan < -9; dan++)// i말고 다른 변수이름 해도 상관없음.
+                    for (int dan = 2; dan < 9; dan++)// i말고 다른 변수이름 해도 상관없음.
                     {
                         Console.WriteLine($"구구단 {dan}단");
                         for (int k = 1; k <= 9; k++) // 시작값 0말고 다른값 입력가능, for문안에 다른 for문도 넣을 수 있음.
@@ -194,8 +235,8 @@ namespace Chapter3
                 // 일일이 어택 명령을 실행할 수 없으니 List에 담아서 한번에 Attack명령 실행한다.
                 // Slime과 Goblin은 모두 Monster의 자식들이라서 monster에 담을 수 있다.
                 // Monster에 담았으니깐 Monster에 있는 Attack명령을 사용할 수 있다.
-                foreach (var item in monsters)
-                    item.Attack();
+                //foreach (var item in monsters)
+                //    item.Attack();
             }
 
             // static 변수/함수.
@@ -206,8 +247,111 @@ namespace Chapter3
                 int totalID = Monster.TotalID;
                 int totalID1 = Monster.GetCurrentID(); // public Static 함수라서 호출 가능.
             }
+
+
+            // 0:사자, 1:호랑이, 2:토끼, 3:여우.
+            {
+                int animal = 0; // 
+
+                if (animal == 0)  // 0: 사자
+                    Console.WriteLine("어흥");
+                else if (animal == 1)
+                    Console.WriteLine("야홍");
+                else if (animal == 2)
+                    Console.WriteLine("깡총");
+                else if (animal == 3)
+                    Console.WriteLine("여우");
+            }
+
+            {
+                Animal animal = Animal.토끼;
+                if (animal == Animal.사자)
+                    Console.WriteLine("어흥");
+                else if (animal == Animal.호랑이)
+                    Console.WriteLine("야홍");
+                else if (animal == Animal.토끼)
+                    Console.WriteLine("깡총");
+                else if (animal == Animal.여우)
+                    Console.WriteLine("여우");
+
+                switch (animal)
+                {
+                    case Animal.사자:
+                        Console.WriteLine("어흥");
+                        break;
+                    case Animal.호랑이:
+                        Console.WriteLine("야홍");
+                        break;
+                    case Animal.토끼:
+                        Console.WriteLine("깡총");
+                        break;
+                    case Animal.여우:
+                        Console.WriteLine("여우");
+                        break;
+                }
+            }
+
+            //enum 과 리스트 사용
+            {
+                List<int> intList = new List<int>();
+                intList.Add(1);
+                intList.Add(2);
+                int firstElement = intList[0];
+                int secondElement = intList[1];
+
+                Animal animal = Animal.호랑이;
+                animal = (Animal)((int)animal + (int)Animal.토끼);
+                Debug.WriteLine(animal);
+            }
+
+
+
+
+            // || or 연산
+            // && and 연산
+            // | <- 비트 연산 or
+            // & <- 비트 연산 and
+            // OR 연산자로 다중 플래그 할당
+            Border b = Border.Top | Border.Bottom;
+
+            // & 연산자로 플래그 체크
+            if ((b & Border.Top) != 0)
+            {
+                //HasFlag()이용 플래그 체크
+                if (b.HasFlag(Border.Bottom))
+                {
+                    // "Top, Bottom" 출력
+                    Console.WriteLine(b.ToString());
+                }
+            }
+        }
+
+        [Flags]
+        enum Border
+        {
+            None    = 0b00000,     // 0
+            Top     = 0b00001,     // 2^0
+            Right   = 0b00010,     // 2^1
+            Bottom  = 0b00100,     // 2^2  = 2* 2 = 4
+            Left    = 0b01000,     // 2^3  = 2 * 2 * 2 = 8
+        }
+
+        enum Animal
+        {
+            // 아시아 동물.
+            사자 , 
+            호랑이,
+            토끼,
+            여우,
+            거북이,
+
+            // 아프리카 동물
+            아프리카사자 = 100,
+            아프리카호랑이,// 101
+            아프리카토끼  // 102
         }
     }
+
 
     internal class Monster
     {
@@ -235,11 +379,6 @@ namespace Chapter3
             hp = _hp;
         }
 
-        virtual public void Attack()
-        {
-            Console.WriteLine($"{power} 로 때렸습니다");
-        }
-
         public override string ToString()
         {
             return $"ID:{id}, name:{name}, power:{power}, hp:{hp}";
@@ -257,23 +396,16 @@ namespace Chapter3
 
     class Slime : Monster
     {
+        public static int SlimeCount = 0;
         public Slime() : base()
         {
             name = "슬라임" + id;
+            SlimeCount++;
         }
 
-        override public void Attack()
+        public void Attack(Goblin goblin)
         {
-            Random r = new Random();
-            if (r.Next(0, 2) > 0)
-            {
-                Console.WriteLine($"공격을 실패 했습니다.");
-            }
-            else
-            {
-                base.Attack();
-            }
-
+            goblin.hp -= power;
         }
     }
     class Goblin : Monster
@@ -283,6 +415,10 @@ namespace Chapter3
             name = "고블린" + id;
         }
 
+        internal void Attack(Slime s1)
+        {
+            s1.hp -= power;
+        }
     }
 
 
